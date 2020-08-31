@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-
+import { logout } from '../lib/auth';
+import AppContext from '../context/AppContext';
 import {
     Container,
     Nav,
@@ -10,6 +11,8 @@ import {
 
 function Layout(props) {
     const title = "Food Apps";
+    const { user, setUser } = useContext(AppContext);
+
     return (
         <div>
             <Head>
@@ -35,18 +38,40 @@ function Layout(props) {
                 <Nav className="navbar navbar-dark bg-dark">
                     <NavItem>
                         <Link href="/">
-                            <a className="nav-link">Home</a>
+                            <a className="navbar-brand">Foodies</a>
                         </Link>
                     </NavItem>
-                    <NavItem>
-                        <Link href="/login">
-                            <a className="nav-link">Sign In</a>
-                        </Link>
+                    <NavItem className="ml-auto">
+                        {
+                            user ? (
+                                <Link href="/">
+                                    <a
+                                    className="nav-link"
+                                    onClick={() => {
+                                        logout();
+                                        setUser(null);
+                                    }}
+                                    >
+                                    Logout
+                                    </a>
+                                </Link>
+                            ):(
+                                <Link href="/auth/login">
+                                    <a className="nav-link">Sign In</a>
+                                </Link>
+                            )
+                        }
                     </NavItem>
                     <NavItem>
-                        <Link href="/register">
-                            <a className="nav-link">Sign Up</a>
-                        </Link>
+                        { 
+                            user ? (
+                                <h5>{user.username}</h5>
+                            ):(
+                                <Link href="/auth/register">
+                                    <a className="nav-link">Sign Up</a>
+                                </Link>
+                            ) 
+                        }
                     </NavItem>
                 </Nav>
             </header>

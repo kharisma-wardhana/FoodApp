@@ -11,7 +11,7 @@ import ListResto from '../components/listresto';
 function Home() {
     const [ query, updateQuery ] = useState("");
     return (
-        <div className="container">
+        <div className="container-fluid">
             <Row>
                 <Col>
                     <div className="search">
@@ -25,15 +25,15 @@ function Home() {
                             />
                         </InputGroup>
                     </div>
-                    <ListResto search={query} />
                 </Col>
             </Row>
+            <ListResto search={query} />
             <style jsx>
                 {
                     `
                     .search {
                         margin: 10px;
-                        width: 350px;
+                        width: 70%;
                     }
                     `
                 }
